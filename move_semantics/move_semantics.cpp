@@ -1,8 +1,10 @@
 #include <cstring>
 #include <iostream>
 
+// Move Semantics in C++
 // https://www.youtube.com/watch?v=ehMg6zvXuMY
-
+// std::move and the Move Assignment Operator in C++
+// https://www.youtube.com/watch?v=OWNeCTd7yQE
 class MyString {
 public:
   // default constructor
@@ -31,6 +33,21 @@ public:
 
     other.m_Size = 0;
     other.m_Data = nullptr;
+  }
+  // move assignment operator should be included when move constructor is implemented
+  MyString &operator=(MyString &&other) noexcept {
+    std::cout << "Move assignment operator was called" << std::endl;
+    if (this != &other) {
+      delete[] m_Data;
+
+      // performing "shalow" copy
+      m_Size = other.m_Size;
+      m_Data = other.m_Data; // assign the pointer instead of copying
+
+      other.m_Size = 0;
+      other.m_Data = nullptr;
+    }
+    return *this;
   }
   // destructor
   ~MyString() {
@@ -74,4 +91,17 @@ int main() {
   Entity entity("Andrej");
   // Entity entity(MyString("Andrej"));
   entity.printName();
+
+  MyString myString = "Hello";
+  // MyString destString(std::move(myString));
+  // std::move converts existing variable into temporary
+  MyString destString = std::move(myString);
+  myString.print(); // empty string
+  destString.print();
+
+  // move assignment operator
+  MyString apple = "Apple";
+  destString = std::move(apple);
+  apple.print();
+  destString.print();
 }
