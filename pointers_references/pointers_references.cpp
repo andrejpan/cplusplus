@@ -9,57 +9,58 @@
     value++;
 }*/
 
-void Increment(int* value)
+void Increment(int *value)
 {
-    // dereference pointer and increment value
-    (*value)++;
+  // dereference pointer and increment value
+  (*value)++;
 }
 
-void IncrementReference(int& value)
+void IncrementReference(int &value)
 {
-    // reference
-    value++;
+  // reference
+  value++;
 }
 
 
-int main() {
+int main()
+{
 
-    // variable on the stack
-    int var = 5;
-    LOG(var);
+  // variable on the stack
+  auto var = 5;
+  LOG(var);
 
-    // not a valid pointer
-    void* ptr0 = nullptr;
+  // not a valid pointer
+  void *ptr0 = nullptr;
 
-    void* ptr1 = &var;
-    int* ptr2 = &var;
+  int *ptr2 = &var;
 
-    double* ptr3 = (double*)&var;
+  // User should not do this
+  //double *ptr3 = (double *)&var;
 
-    // dereferencing
-    *ptr2 = 10;
-    LOG(var);
+  // dereferencing
+  *ptr2 = 10;
+  LOG(var);
 
-    // TODO find out why this does not work...
-    *ptr3 = 11;
-    LOG(var);
+  // TODO find out why this does not work...
+  int ptr3 = 11;
+  LOG(var);
 
-    // variable on the heap
-    char* buffer = new char[8];
-    memset(buffer, 0, 8);
-    delete[] buffer;
+  // variable on the heap
+  char *buffer = new char[8];
+  memset(buffer, 0, 8);
+  delete[] buffer;
 
-    // references
-    int& ref1 = var; //alias for var
-    ref1 = 2;
-    LOG(var);
+  // references
+  int &ref1 = var;//alias for var
+  ref1 = 2;
+  LOG(var);
 
-    Increment(&var);
-    LOG(var);
+  Increment(&var);
+  LOG(var);
 
-    IncrementReference(var);
-    LOG(var);
+  IncrementReference(var);
+  LOG(var);
 
-    // reference can be assigned just to one value and can not be changed to another
-    return 0;
+  // reference can be assigned just to one value and can not be changed to another
+  return 0;
 }
