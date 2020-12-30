@@ -13,14 +13,15 @@ target_compile_features(project_options INTERFACE cxx_std_17)
 # Link this 'library' to use the warnings specified in CompilerWarnings.cmake
 add_library(project_warnings INTERFACE)
 
+# cmake-format: off
 # standard compiler warnings
 # include(cmake/CompilerWarnings.cmake)
 # set_project_warnings(project_warnings)
 
 # allow for static analysis options
 #include(cmake/StaticAnalyzers.cmake)
+# cmake-format: on
 
-# cmake-format: off
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
 
 add_subdirectory(smart_pointers)
