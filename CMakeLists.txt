@@ -28,5 +28,6 @@ add_subdirectory(smart_pointers)
 add_subdirectory(lvalues_and_rvalues)
 add_subdirectory(move_semantics)
 add_subdirectory(pointers_references)
+add_subdirectory(variant)
 
 message("Supported features = ${CMAKE_CXX_COMPILE_FEATURES}")
