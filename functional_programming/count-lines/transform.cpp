@@ -6,9 +6,10 @@
 #include <fstream>
 #include <algorithm>
 #include <iterator>
+#include <numeric>
 
 /**
- * Opens a file specified by the filename argument, and counts the number of lines in said file
+ * Opens a file specified by the filename argument, and counts the number of lines in the file
  */
 int count_lines(const std::string &filename)
 {
@@ -32,12 +33,30 @@ std::vector<int> count_lines_in_files(const std::vector<std::string> &files)
   return results;
 }
 
+/**
+ * Counts endline characters
+ */
+int cout_endline_chars(int previous_count, char c) { return (c != '\n') ? previous_count : previous_count + 1; }
+
+/**
+ * Opens a file specified by the filename argument, and counts the number of lines in the file through folding
+ */
+int count_lines_fold(const std::string &filename) {
+  std::ifstream in(filename);
+
+  return std::accumulate(
+    std::istream_iterator<char>(in >> std::noskipws), std::istream_iterator<char>(), 0, cout_endline_chars);
+}
+
 int main()
 {
   const std::vector<std::string> files = { "file1.txt", "file2.txt", "file3.txt" };
   auto results = count_lines_in_files(files);
 
   for (auto i = 0; i < files.size(); ++i) { std::cout << files.at(i) << " has " << results.at(i) << " line(s)\n"; }
+
+  // folding
+  std::cout << files.at(0) << " has " << count_lines_fold(files.at(0)) << " line(s)\n";
 
   return 0;
 }
