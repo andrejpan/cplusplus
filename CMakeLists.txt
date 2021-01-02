@@ -29,5 +29,6 @@ add_subdirectory(lvalues_and_rvalues)
 add_subdirectory(move_semantics)
 add_subdirectory(pointers_references)
 add_subdirectory(variant)
+add_subdirectory(functional_programming/count-lines)
 
 message("Supported features = ${CMAKE_CXX_COMPILE_FEATURES}")
