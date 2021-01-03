@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.15)
 project(randomProjects CXX)
 include(cmake/StandardProjectSettings.cmake)
 
+# print_all_variables()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -23,7 +25,12 @@ add_library(project_warnings INTERFACE)
 #include(cmake/StaticAnalyzers.cmake)
 # cmake-format: on
 
-option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
+# Setup Google Test
+if(ENABLE_TESTING)
+  include(cmake/SetupGoogleTest.cmake)
+  enable_testing()
+  add_subdirectory(test)
+endif()
 
 add_subdirectory(smart_pointers)
 add_subdirectory(lvalues_and_rvalues)
@@ -32,5 +39,6 @@ add_subdirectory(pointers_references)
 add_subdirectory(variant)
 add_subdirectory(functional_programming/count-lines)
 add_subdirectory(functional_programming/math)
+add_subdirectory(google_test_samples)
 
-message("Supported features = ${CMAKE_CXX_COMPILE_FEATURES}")
+# message("Supported features = ${CMAKE_CXX_COMPILE_FEATURES}")

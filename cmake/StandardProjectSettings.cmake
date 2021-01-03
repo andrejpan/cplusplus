@@ -30,3 +30,35 @@ if(ENABLE_IPO)
     message(SEND_ERROR "IPO is not supported: ${output}")
   endif()
 endif()
+
+set(THIRDPARTY_SOURCES_DIR
+    "${CMAKE_SOURCE_DIR}/3rdparty"
+    CACHE PATH "Directory for third-party sources")
+# message(STATUS "THIRDPARTY_SOURCES_DIR: ${THIRDPARTY_SOURCES_DIR}")
+
+# TODO Where is this used?
+option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" ON)
+option(ENABLE_TESTING "Enable Test Builds" ON)
+
+if(ENABLE_TESTING)
+  set(GTEST_SOURCE_DIR ${THIRDPARTY_SOURCES_DIR}/googletest)
+  set(GTEST_BINARY_DIR ${CMAKE_BINARY_DIR}/googletest)
+  # https://github.com/facebook/fbthrift/blob/master/build/fbcode_builder/manifests/googletest
+  set(GOOGLETEST_VERSION 1.10.0)
+  set(GTEST_ARCHIVE_HASH 9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb)
+  set(GTEST_LIBRARIES gtest gtest_main gmock)
+  # cmake-format: off
+  #message(STATUS "GTEST_SOURCE_DIR path: ${GTEST_SOURCE_DIR} ")
+  #message(STATUS "GTEST_BINARY_DIR path: ${GTEST_BINARY_DIR} ")
+  # cmake-format: on
+endif()
+
+# Display all CMake variables
+macro(print_all_variables)
+  message(STATUS "print_all_variables------------------------------------------{")
+  get_cmake_property(_variableNames VARIABLES)
+  foreach(_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+  endforeach()
+  message(STATUS "print_all_variables------------------------------------------}")
+endmacro()
